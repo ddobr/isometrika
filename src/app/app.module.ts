@@ -1,18 +1,29 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './components/app/app.component';
+import { PixiTemplateComponent } from './components/pixi-template/pixi-template.component';
+import * as PIXI from 'pixi.js';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+
+const routes: Routes = [
+
+];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        PixiTemplateComponent,
+    ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes)
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+    constructor() {
+        (window as any).PIXI = PIXI;
+    }
+}
