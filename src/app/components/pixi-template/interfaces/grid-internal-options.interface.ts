@@ -1,6 +1,7 @@
 export interface IGridInternalOptions { 
     /** Высота экрана */
     height: number, 
+    width: number,
     /** Расстояние между линиями */
     dist: 8 | 16 | 32 | 64 | 128 | 256, 
     /**

@@ -1,6 +1,7 @@
 precision mediump float;
 
 uniform int height;
+uniform int width;
 uniform float dist;
 uniform int colorType;
 uniform bool drawVertical;
@@ -18,7 +19,7 @@ void main() {
     }
 
 
-    vec2 pos = vec2(gl_FragCoord.x, float(height) - gl_FragCoord.y);
+    vec2 pos = vec2(gl_FragCoord.x - float(width) / 2.0, float(height) - gl_FragCoord.y);
     if (
         // up
         (int(mod(pos.y + (pos.x + 1.0) * 0.5, dist)) == 0)

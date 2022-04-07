@@ -30,7 +30,13 @@ export class PixiTemplateComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private _app!: Application;
 
-    private _gridShaderUniform: IGridInternalOptions = { height: 0, dist: 32., colorType: 0, drawVertical: true };
+    private _gridShaderUniform: IGridInternalOptions = { 
+        height: 0, 
+        width: 0,
+        dist: 32., 
+        colorType: 0, 
+        drawVertical: true 
+    };
     private _gridSprite?: Sprite
 
     constructor(
@@ -75,8 +81,8 @@ export class PixiTemplateComponent implements OnInit, OnDestroy, AfterViewInit {
         this._app.destroy(true);
     }
 
-    @HostListener('window:resize')
-    public resize(): void {
+    @HostListener('window:resize', ['$event.target'])
+    public resize(e?: any): void {
         const viewportScale = 1 / this.devicePixelRatio;
 
         const width = isNullOrUndefined(this.options?.width)
@@ -88,7 +94,7 @@ export class PixiTemplateComponent implements OnInit, OnDestroy, AfterViewInit {
             : this.options!.height!;
 
         this._app.renderer.resize(width * this.devicePixelRatio, height * this.devicePixelRatio);
-        this._app.view.style.transform = `scale(${viewportScale})`;
+        this._app.view.style.transform = `scale(${1})`;
         this._app.view.style.transformOrigin = `top left`;
 
         if (!isNullOrUndefined(this.options?.onResize)) {
@@ -119,6 +125,10 @@ export class PixiTemplateComponent implements OnInit, OnDestroy, AfterViewInit {
             const height = isNullOrUndefined(options?.height)
                 ? this.getRemainingHeight()
                 : this.options!.height!;
+            
+            const width = isNullOrUndefined(this.options?.width)
+                ? document.body.clientWidth
+                : this.options!.width!;
 
             this._gridSprite.width = this._app.view.width;
             this._gridSprite.height = this._app.view.height;
@@ -126,6 +136,7 @@ export class PixiTemplateComponent implements OnInit, OnDestroy, AfterViewInit {
             this._gridShaderUniform.colorType = this.getShaderColor(options.grid.color);
             this._gridShaderUniform.dist = options.grid.distance || 16;
             this._gridShaderUniform.height = height;
+            this._gridShaderUniform.width = width;
             this._gridShaderUniform.drawVertical = isNullOrUndefined(options.grid.drawVerticalLines) 
                 ? true 
                 : options.grid.drawVerticalLines!;
