@@ -28,6 +28,13 @@ describe('toRadians', () => {
 
         expect(result).toEqual(2 * Math.PI / 3);
     });
+
+    it("Must return - (2 * Pi) / 3 for -120 degrees", function () {
+        const angle = -120;
+        const result = toRadians(angle);
+
+        expect(result).toEqual(-2 * Math.PI / 3);
+    });
 });
 
 describe('toDegrees', () => {
@@ -50,5 +57,12 @@ describe('toDegrees', () => {
         const result = toDegrees(angle);
 
         expect(result).toBeCloseTo(120);
+    });
+
+    it("Must return -120 for -(2 * PI) / 3 radians", function () {
+        const angle = -2 * Math.PI / 3;
+        const result = toDegrees(angle);
+
+        expect(result).toBeCloseTo(-120);
     });
 });
